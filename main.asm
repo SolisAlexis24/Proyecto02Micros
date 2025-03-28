@@ -5,8 +5,15 @@ valor1 equ h'21'
 valor2 equ h'22'
 valor3 equ h'23'
 posicion_pacman equ h'24'
+posicionMensaje equ h'25'
+char_ptr equ h'26'
+overflow equ h'27'
+contadorOver equ h'28'
+temp equ h'29'
+charTmp equ h'30'
+
 ;Retardos tradicionales
-cte1 equ .25 ;Retardo de 500 ms
+cte1 equ .10 ;Retardo de 500 ms
 cte2 equ .83
 cte3 equ .200
 cte4 equ .2 ;Retardo de 2 ms
@@ -51,9 +58,11 @@ inicio:
 	CALL inciarDisplay
 	CALL cargarCaracteresAnimacion
 	CALL inicializarPacman
+	CALL inicializarMensaje
 
 bucle_principal:
 	CALL animacion_pacman
+	CALL animarMensaje
 	goto bucle_principal
 
 
@@ -64,5 +73,6 @@ bucle_principal:
 #include "retardos.asm"
 #include "LCD.asm"
 #include "pacman.asm"
+#include "equipo.asm"
   
 end
