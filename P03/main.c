@@ -1,0 +1,110 @@
+#include <main.h>
+
+unsigned char codifica(unsigned char);
+unsigned char play = 0;
+
+unsigned char cont_su = 0;  // unidades de segundo
+unsigned char cont_sd = 0;  // decenas de segundo
+unsigned char cont_mu = 0;  // unidades de minuto
+unsigned char cont_md = 0;  // decenas de minuto
+
+unsigned char digi_actual = 0;  // Para multiplexar los dígitos
+
+
+#INT_EXT
+void ext_int_isr() {
+   play = !play;
+   clear_interrupt(INT_EXT);
+}
+
+#INT_TIMER0
+void timer0_isr() {
+   // Multiplexado del display
+   switch (digi_actual) {
+      case 0:
+         output_a(0x01);  // Selecciona primer dígito: decenas de minuto
+         output_d(codifica(cont_md));
+         break;
+      case 1:
+         output_a(0x02);  // Segundo dígito: unidades de minuto
+         output_d(codifica(cont_mu));
+         break;
+      case 2:
+         output_a(0x04);  // Tercer dígito: decenas de segundo
+         output_d(codifica(cont_sd));
+         break;
+      case 3:
+         output_a(0x08);  // Cuarto dígito: unidades de segundo
+         output_d(codifica(cont_su));
+         break;
+   }
+
+   digi_actual++;  //Aumenta el dígito para escribir al siguiente
+   if (digi_actual > 3)     //Si llegaste al límite
+      digi_actual = 0;     //Reinicia para volver a escribir
+   
+   set_timer0(0);    // Reinicia el timer0
+}
+
+void main() {
+   // Configuración de puertos
+   set_tris_a(0x00);  // puerto A como salida (selección de dígitos)
+   set_tris_d(0x00);  // puerto D como salida (segmentos)
+   set_tris_b(0x03);  // RB0 y RB1 como entrada
+   setup_adc_ports(NO_ANALOGS); // todos los pines como digitales
+
+   // Configuración del Timer0
+   setup_timer_0(RTCC_INTERNAL|RTCC_DIV_64); // Prescaler 1:64 asignado a TMR0
+   set_timer0(0);               // Valor de precarga
+   
+   // Configuración de interrupciones
+   enable_interrupts(INT_TIMER0);
+   enable_interrupts(INT_EXT);
+   enable_interrupts(GLOBAL);
+
+   while (TRUE) {
+      if(input(PIN_B1) == 0){       //Reinicia el contador cuando se presiona boton
+         cont_su = 0;
+         cont_sd = 0;
+         cont_mu = 0;
+         cont_md = 0;
+         play = 0;
+      }
+      if(play){              // Solo avanza cuando se desea
+         delay_ms(1000);     // Espera 1 segundo
+         cont_su++;
+
+         if (cont_su > 9) {
+            cont_su = 0;
+            cont_sd++;
+         }
+         if (cont_sd > 5) {
+            cont_sd = 0;
+            cont_mu++;
+         }
+         if (cont_mu > 9) {
+            cont_mu = 0;
+            cont_md++;
+         }
+         if (cont_md > 5) {
+            cont_md = 0;
+         }
+      }
+   }
+}
+
+unsigned char codifica(unsigned char numero) {
+   switch (numero) {
+      case 0: return 0x3F;
+      case 1: return 0x06;
+      case 2: return 0x5B;
+      case 3: return 0x4F;
+      case 4: return 0x66;
+      case 5: return 0x6D;
+      case 6: return 0x7D;
+      case 7: return 0x07;
+      case 8: return 0x7F;
+      case 9: return 0x6F;
+      default: return 0x00;
+   }
+}
