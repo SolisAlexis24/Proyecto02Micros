@@ -10,7 +10,7 @@ unsigned char cont_md = 0;  // decenas de minuto
 
 unsigned char digi_actual = 0;  // Para multiplexar los dígitos
 
-int time_dl = 0;
+int time_dl = 30;
 
 #INT_EXT
 void ext_int_isr() {

@@ -1,0 +1,15 @@
+Compiling J:\JuanM\Documents\Escuela\8vo semestre\Microcomputadoras\Git\Proyecto02Micros\P03\main on 09-abr.-25 at 22:15
+>>> Warning 242 "J:\JuanM\Documents\Escuela\8vo semestre\Microcomputadoras\Git\Proyecto02Micros\P03\main.c" Line 103(26,27): May be missing a break
+>>> Warning 242 "J:\JuanM\Documents\Escuela\8vo semestre\Microcomputadoras\Git\Proyecto02Micros\P03\main.c" Line 104(26,27): May be missing a break
+>>> Warning 242 "J:\JuanM\Documents\Escuela\8vo semestre\Microcomputadoras\Git\Proyecto02Micros\P03\main.c" Line 105(26,27): May be missing a break
+>>> Warning 242 "J:\JuanM\Documents\Escuela\8vo semestre\Microcomputadoras\Git\Proyecto02Micros\P03\main.c" Line 106(26,27): May be missing a break
+>>> Warning 242 "J:\JuanM\Documents\Escuela\8vo semestre\Microcomputadoras\Git\Proyecto02Micros\P03\main.c" Line 107(26,27): May be missing a break
+>>> Warning 242 "J:\JuanM\Documents\Escuela\8vo semestre\Microcomputadoras\Git\Proyecto02Micros\P03\main.c" Line 108(26,27): May be missing a break
+>>> Warning 242 "J:\JuanM\Documents\Escuela\8vo semestre\Microcomputadoras\Git\Proyecto02Micros\P03\main.c" Line 109(26,27): May be missing a break
+>>> Warning 242 "J:\JuanM\Documents\Escuela\8vo semestre\Microcomputadoras\Git\Proyecto02Micros\P03\main.c" Line 110(26,27): May be missing a break
+>>> Warning 242 "J:\JuanM\Documents\Escuela\8vo semestre\Microcomputadoras\Git\Proyecto02Micros\P03\main.c" Line 111(26,27): May be missing a break
+>>> Warning 242 "J:\JuanM\Documents\Escuela\8vo semestre\Microcomputadoras\Git\Proyecto02Micros\P03\main.c" Line 112(26,27): May be missing a break
+>>> Warning 216 "J:\JuanM\Documents\Escuela\8vo semestre\Microcomputadoras\Git\Proyecto02Micros\P03\main.c" Line 115(1,2): Interrupts disabled during call to prevent re-entrancy:  (@delay_ms1)
+      Memory usage:   ROM=4%      RAM=6% - 6%
+      0 Errors,  11 Warnings.
+Build Successful.
