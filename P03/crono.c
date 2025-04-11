@@ -20,6 +20,22 @@ void interrupcion_start()
    pause = !pause;
 }
 
+#INT_TIMER0
+void timer0_isr() {
+   // Revisar el segundo boton
+   if(input(PIN_B1) == 0)
+   {
+      pause = 1;
+      cont_su = 0;
+      cont_sd = 0;
+      cont_mu = 0;
+      cont_md = 0;
+      cont = 0;
+   }
+   
+   set_timer0(0);    // Reinicia el timer0
+}
+
 void main()
 {
    set_tris_b(0x03);  // RB0 y RB1 como entrada
@@ -28,6 +44,12 @@ void main()
 
    setup_adc_ports(NO_ANALOGS); // todos los pines como digitales
    
+   // Configuración del Timer0
+   setup_timer_0(RTCC_INTERNAL|RTCC_DIV_64); // Prescaler 1:64 asignado a TMR0
+   set_timer0(0);               // Valor de precarga
+   
+   // Configuración de interrupciones
+   enable_interrupts(INT_TIMER0);
    enable_interrupts(GLOBAL);
    enable_interrupts(INT_EXT);
      
@@ -79,16 +101,6 @@ void main()
                }
             }
          }
-      }
-      //------------------------------------------------------------------------------
-      if(input(PIN_B1) == 0)
-      {
-         pause = 1;
-         cont_su = 0;
-         cont_sd = 0;
-         cont_mu = 0;
-         cont_md = 0;
-         cont = 0;
       }
    }
    
