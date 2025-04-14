@@ -1,0 +1,19 @@
+#include <main.h>
+#include <lcd.c>
+
+void main() {
+   unsigned int16 temp;
+   lcd_init();
+   setup_port_a(ALL_ANALOG);
+   setup_adc(ADC_CLOCK_INTERNAL);
+
+   while(TRUE) {
+      set_adc_channel(1);   // RA1
+      delay_ms(2);          // Importante para estabilizar
+      temp = read_adc();    // Devuelve 10 bits por defecto
+
+      printf(lcd_putc, "\fADC: %u", temp);
+      delay_ms(300);  // Para no saturar el LCD
+   }
+}
+

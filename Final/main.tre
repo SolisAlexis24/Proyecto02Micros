@@ -1,0 +1,103 @@
+ÀÄmain
+   ÀÄMAIN  0/220  Ram=4
+      ÃÄ@cinit1  (Inline)  Ram=0
+      ÃÄ@cinit2  (Inline)  Ram=0
+      ÃÄlcd_init  0/84  Ram=6
+      ³  ÃÄ@delay_ms1  0/20  Ram=1
+      ³  ÃÄlcd_send_nibble  0/56  Ram=1
+      ³  ÃÄ@delay_ms1  0/20  Ram=1
+      ³  ÃÄlcd_send_nibble  0/56  Ram=1
+      ³  ÃÄ@delay_ms1  0/20  Ram=1
+      ³  ÀÄlcd_send_byte  0/100  Ram=3
+      ³     ÃÄlcd_read_byte  (Inline)  Ram=3
+      ³     ³  ÃÄlcd_read_nibble  0/51  Ram=2
+      ³     ³  ÀÄlcd_read_nibble  0/51  Ram=2
+      ³     ÃÄlcd_send_nibble  0/56  Ram=1
+      ³     ÀÄlcd_send_nibble  0/56  Ram=1
+      ÃÄ@PSTRINGC7_724  0/116  Ram=4
+      ³  ÃÄlcd_putc  0/58  Ram=1
+      ³  ³  ÃÄlcd_gotoxy  0/20  Ram=4
+      ³  ³  ³  ÀÄlcd_send_byte  0/100  Ram=3
+      ³  ³  ³     ÀÄ*
+      ³  ³  ÃÄlcd_send_byte  0/100  Ram=3
+      ³  ³  ³  ÀÄ*
+      ³  ³  ÃÄ@delay_ms1  0/20  Ram=1
+      ³  ³  ÃÄlcd_gotoxy  0/20  Ram=4
+      ³  ³  ³  ÀÄ*
+      ³  ³  ÃÄlcd_send_byte  0/100  Ram=3
+      ³  ³  ³  ÀÄ*
+      ³  ³  ÀÄlcd_send_byte  0/100  Ram=3
+      ³  ³     ÀÄ*
+      ³  ÀÄlcd_putc  0/58  Ram=1
+      ³     ÀÄ*
+      ÃÄcomprobar_comando  0/873  Ram=5
+      ³  ÃÄstrcmp  0/70  Ram=5
+      ³  ÃÄ@PRINTF_U_38400_62_63  (Inline)  Ram=2
+      ³  ³  ÃÄ@DIV88  0/23  Ram=3
+      ³  ³  ÀÄ@DIV88  0/23  Ram=3
+      ³  ÃÄ@PSTRINGCN7_724  0/122  Ram=5
+      ³  ³  ÃÄlcd_putc  0/58  Ram=1
+      ³  ³  ³  ÀÄ*
+      ³  ³  ÀÄlcd_putc  0/58  Ram=1
+      ³  ³     ÀÄ*
+      ³  ÃÄ@PRINTF_U_724  0/63  Ram=2
+      ³  ³  ÃÄ@DIV88  0/23  Ram=3
+      ³  ³  ÃÄlcd_putc  0/58  Ram=1
+      ³  ³  ³  ÀÄ*
+      ³  ³  ÃÄ@DIV88  0/23  Ram=3
+      ³  ³  ÃÄlcd_putc  0/58  Ram=1
+      ³  ³  ³  ÀÄ*
+      ³  ³  ÀÄlcd_putc  0/58  Ram=1
+      ³  ³     ÀÄ*
+      ³  ÃÄstrcmp  0/70  Ram=5
+      ³  ÃÄecho  0/45  Ram=0
+      ³  ³  ÀÄ@PSTRINGR_38400_62_63  (Inline)  Ram=2
+      ³  ÃÄ@PSTRINGC7_724  0/116  Ram=4
+      ³  ³  ÀÄ*
+      ³  ÃÄstrcmp  0/70  Ram=5
+      ³  ÃÄecho  0/45  Ram=0
+      ³  ³  ÀÄ*
+      ³  ÃÄ@PSTRINGC7_724  0/116  Ram=4
+      ³  ³  ÀÄ*
+      ³  ÃÄstrcmp  0/70  Ram=5
+      ³  ÃÄecho  0/45  Ram=0
+      ³  ³  ÀÄ*
+      ³  ÃÄ@PSTRINGC7_724  0/116  Ram=4
+      ³  ³  ÀÄ*
+      ³  ÃÄstrcmp  0/70  Ram=5
+      ³  ÃÄecho  0/45  Ram=0
+      ³  ³  ÀÄ*
+      ³  ÃÄ@PSTRINGC7_724  0/116  Ram=4
+      ³  ³  ÀÄ*
+      ³  ÃÄstrlen  0/32  Ram=5
+      ³  ÃÄstrncmp  (Inline)  Ram=6
+      ³  ÃÄstrlen  0/32  Ram=5
+      ³  ÃÄstrlen  0/32  Ram=5
+      ³  ÃÄ@PSTRINGC7_724  0/116  Ram=4
+      ³  ³  ÀÄ*
+      ³  ÃÄatoi  (Inline)  Ram=9
+      ³  ³  ÀÄ@MUL88  (Inline)  Ram=2
+      ³  ÃÄ@PSTRINGC7_724  0/116  Ram=4
+      ³  ³  ÀÄ*
+      ³  ÃÄajusta_dc_PWM  (Inline)  Ram=3
+      ³  ³  ÃÄ@MUL1616  (Inline)  Ram=5
+      ³  ³  ÀÄ@DIV1616  (Inline)  Ram=5
+      ³  ÃÄ@PSTRINGCN7_724  0/122  Ram=5
+      ³  ³  ÀÄ*
+      ³  ÃÄ@PRINTF_U_724  0/63  Ram=2
+      ³  ³  ÀÄ*
+      ³  ÃÄlcd_putc  0/58  Ram=1
+      ³  ³  ÀÄ*
+      ³  ÃÄlcd_putc  0/58  Ram=1
+      ³  ³  ÀÄ*
+      ³  ÃÄlcd_putc  0/58  Ram=1
+      ³  ³  ÀÄ*
+      ³  ÃÄlcd_putc  0/58  Ram=1
+      ³  ³  ÀÄ*
+      ³  ÃÄ@PSTRINGC7_724  0/116  Ram=4
+      ³  ³  ÀÄ*
+      ³  ÃÄlcd_gotoxy  0/20  Ram=4
+      ³  ³  ÀÄ*
+      ³  ÀÄ@PSTRINGC7_724  0/116  Ram=4
+      ³     ÀÄ*
+      ÀÄ@MEMSET  0/11  Ram=0
