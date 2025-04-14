@@ -1,0 +1,59 @@
+[PROJECT]
+Target=main.hex
+Processor_Text=PIC16F877A
+CCSVersion=5.093
+Compiler=PCM
+[Target Data]
+FileList=main.c
+[main.c]
+Type=4
+[mru-list]
+1=main.c
+
+[defines]
+buildcount=19
+
+[Opened Files]
+1=main.c
+t1=7
+Count=3
+2=..\..\..\Proy_T\Pr_03\main.c
+t2=41
+3=..\..\..\Proy_T\Pr_03\crono.c
+t3=41
+
+[ProjectLog]
+Days=1
+D1=09-04-2025
+D1_L=21
+D1_L1=[61246]Project Closed.
+D1_L2=[61345]Project Opened.
+D1_L3=[61354]Project Closed.
+D1_L4=[61364]Project Opened.
+D1_L5=[61369]Project Closed.
+D1_L6=[61779]Project Opened.
+D1_L7=[61795]Started Editing.
+D1_L8=[63797]Stopped Editing.
+D1_L9=[73715]Started Editing.
+D1_L10=[74243]Stopped Editing.
+D1_L11=[76359]Started Editing.
+D1_L12=[76760]Stopped Editing.
+D1_L13=[76844]Started Editing.
+D1_L14=[78275]Stopped Editing.
+D1_L15=[79092]Started Editing.
+D1_L16=[79417]Stopped Editing.
+D1_L17=[79502]Started Editing.
+D1_L18=[80236]Stopped Editing.
+TotalEdit=66
+TotalDebug=0
+D1_E=66
+D1_D=0
+D1_L19=[80236]Project Closed.
+D1_L20=[80249]Project Opened.
+D1_L21=[80254]Project Closed.
+
+[fileformats]
+forcecoff=0
+[Units]
+Count=1
+1=main (main)

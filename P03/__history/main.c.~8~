@@ -10,7 +10,6 @@ unsigned char cont_md = 0;  // decenas de minuto
 
 unsigned char digi_actual = 0;  // Para multiplexar los dígitos
 
-int time_dl = 0;
 
 #INT_EXT
 void ext_int_isr() {
@@ -25,24 +24,22 @@ void timer0_isr() {
       case 0:
          output_a(0x01);  // Selecciona primer dígito: decenas de minuto
          output_d(codifica(cont_md));
-         delay_ms(time_dl);
          break;
       case 1:
          output_a(0x02);  // Segundo dígito: unidades de minuto
          output_d(codifica(cont_mu));
-         delay_ms(time_dl);
          break;
       case 2:
          output_a(0x04);  // Tercer dígito: decenas de segundo
          output_d(codifica(cont_sd));
-         delay_ms(time_dl);
          break;
       case 3:
          output_a(0x08);  // Cuarto dígito: unidades de segundo
          output_d(codifica(cont_su));
-         delay_ms(time_dl);
          break;
    }
+   
+   delay_ms(40);
 
    digi_actual++;  //Aumenta el dígito para escribir al siguiente
    if (digi_actual > 3)     //Si llegaste al límite
