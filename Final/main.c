@@ -22,6 +22,7 @@ char buffer[MAX_LEN];               // Buffer para mensaje recibido
 char* patron_pwm = "pwm=";          // Puntero al patron del pwm
 unsigned int8 pwm_val = 0;          // Cambiado a unsigned int16 para PWM de 10 bits
 unsigned int8 temperatura = 0;      // Temperatura del sensor
+int1 motor_on = 0;                   // Bandera para controlar el motor
 
 void main()
 {
@@ -38,9 +39,10 @@ void main()
    //===================================================================================
    
    lcd_putc("\fSistema listo");
+   printf(">>Sistema listo\r");
    while(TRUE) {
       if(kbhit()) {             // Verifica si hay datos disponibles antes de leer
-         c = getc();            // Lee un car·cter
+         c = getc();            // Lee un car√°cter
          if(c == '\r' || c == '\n') {
             buffer[i] = '\0';           // Termina la cadena
             comprobar_comando();        // Se comprueba si la cadena pertenece a un comando
@@ -48,7 +50,7 @@ void main()
             memset(buffer, 0, MAX_LEN); // Se borra el buffer
          }
          else if(i < MAX_LEN - 1){     // Si aun caben caracteres
-            buffer[i++] = c;           // Se aÒade al buffer
+            buffer[i++] = c;           // Se a√±ade al buffer
          }
       }
    }
@@ -59,44 +61,47 @@ void main()
  */
 void comprobar_comando(){
    if(strcmp(buffer, comandos[0]) == 0) {
+      
       setup_ccp1(CCP_OFF);       // Se apaga el PWM para no obstaculizar lectura
       set_adc_channel(1);        // Se fija el canal de lectura 
       delay_us(10);              // Estabilizacion
       temperatura = read_adc();  // Leer el valor de 8 bits
       temperatura = 2*temperatura; //Valor aproximado a lectura*19.53mV/(10mV/C)
       //Donde 19.53 mV es la resolucion a 8 bits y 10 mV/C es el paso del sensor
-      printf(">>%u\r", temperatura);
-      printf(lcd_putc, "\fTemp: %u", temperatura);
-      if(pwm_val>0) setup_ccp1(CCP_PWM);  // Si hay valor de PWM, se fija
+      printf(">>La temperatura es: %u *C\r", temperatura);
+      printf(lcd_putc, "\fTemperatura: %u", temperatura);
+      if(pwm_val>0) setup_ccp1(CCP_PWM);  // Si hay valor de PWM, se enciende PWM
    } 
    else if(strcmp(buffer, comandos[1]) == 0){
-      echo();
-      lcd_putc("\fEnciende motor");
       output_high(IN1);             // Se enciende el motor
-      output_low(EN1);
-      //set_pwm1_duty(pwm_val);             // Se fija pwm
-   }
+      output_low(EN1);              // Se apaga el enable
+                                    // Esto no afecta por el control de PWM
+                                    // Pero si no esta, el motor se enciende solo
+      motor_on = 1;                 // Indica motor funcionando
+      printf(">>Se enciende el motor\r");
+      lcd_putc("\fEnciende motor");
+   } 
    else if(strcmp(buffer, comandos[2]) == 0){
-      echo();
-      lcd_putc("\fApaga motor");
       output_low(IN1);              // Se apaga el motor
-      set_pwm1_duty(0);             // Se fija pwm a 0
+      motor_on = 0;                 // Indica motor apagado
+      printf(">>Se apaga el motor\r");
+      lcd_putc("\fApaga motor");
    }
    else if(strcmp(buffer, comandos[3]) == 0){
-      echo();
+      printf(">>Se encienden los LEDs\r");
       lcd_putc("\fEnciende LEDs");
       output_b(0xFF);               // Se encienden los LEDs
    }
    else if(strcmp(buffer, comandos[4]) == 0){
-      echo();
-      lcd_putc("\fApaga LEDs");
       output_b(0x00);               // Se apagan los LEDs
+      printf(">>Se apagan los LEDs\r");
+      lcd_putc("\fApaga LEDs");
    }
    else if(strncmp(buffer, patron_pwm, strlen(patron_pwm)) == 0){
-      // Extrae el valor despuÈs de "pwm="
+      // Extrae el valor despu√©s de "pwm="
       char *pwm_str = buffer + strlen(patron_pwm);
       
-      // Verifica que todos los caracteres sean dÌgitos
+      // Verifica que todos los caracteres sean d√≠gitos
       int valid = 1;
       for(int j = 0; pwm_str[j] != '\0'; j++) {
          if(!isdigit(pwm_str[j])) {
@@ -105,8 +110,9 @@ void comprobar_comando(){
          }
       }
       
-      if(!valid || strlen(pwm_str) > 3) {  // M·ximo 3 dÌgitos (0-100)
+      if(!valid || strlen(pwm_str) > 3) {  // M√°ximo 3 d√≠gitos (0-100)
          lcd_putc("\fPWM invalido");
+         printf(">>PWM invalido\r");
          return;
       }
       
@@ -114,29 +120,24 @@ void comprobar_comando(){
       
       if(pwm_val > 100) {
          lcd_putc("\fPWM > 100%");
+         printf(">>El PWM debe ser menor a 100%%\r");
          return;
       }
       
-      setup_ccp1(CCP_PWM);
-      // Se ajusta el ciclo de trabajo
-      ajusta_dc_PWM(pwm_val);
-
+      setup_ccp1(CCP_PWM);             // Se enciende el PWM
+      ajusta_dc_PWM(pwm_val);          // Se ajusta el ciclo de trabajo
+      if(!motor_on) output_low(IN1);   // Si el motor no esta andando, mantenlo asi
       printf(lcd_putc, "\f***PWM = %u%%***", pwm_val);
+      printf(">>Se actualiza el PWM al %u%%\r", pwm_val);
    }
-   else {      
+   else {     
+      printf(">>El comando \"%s\" no es reconocido\r", buffer);
       lcd_putc("\fComando no");
       lcd_gotoxy(1,2);
       lcd_putc("reconocido");
    }
 }
 
-/**
- * Eco del comando recibido por comunicaciÛn serial
- */
-void echo()
-{
-    printf(">>%s\r", buffer);
-}
 
 
 /**
